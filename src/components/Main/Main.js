@@ -87,7 +87,7 @@ export default class Main extends Component {
       return(
         <div className = "container">
           <nav>
-            <button className="highlighted" onClick={this.pageOnMain.bind(this)}><i className="fa fa-reddit-alien" aria-hidden="true"></i> /r/analog</button>
+            <button className="highlighted" onClick={this.pageOnMain.bind(this)}><i className="fa fa-reddit-alien" aria-hidden="true"></i> /r/{this.state.subreddit}</button>
             <button className="lowlighted" onClick={this.pageOnFav.bind(this)}><i className="fa fa-heart" aria-hidden="true"></i> favorites ({this.state.favorites.length})</button>
           </nav>
           <div className="search-area">

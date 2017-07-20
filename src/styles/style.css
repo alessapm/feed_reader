@@ -8,6 +8,11 @@ nav {
   left: 0;
 }
 
+nav button {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 16px;
+}
+
 img {
   height: 350px;
   width: 500px;
@@ -109,14 +114,17 @@ button {
 .search-area {
   margin-top: 50px;
   color: #57a2e4;
+  font-family: 'Helvetica', sans-serif;
 }
 
 .search-area input {
   width: 300px;
+  font-family: 'Helvetica', sans-serif;
 }
 
 .search-area button {
   color: #57a2e4;
   border: 1px solid #57a2e4;
   display: inline;
+  font-family: 'Helvetica', sans-serif;
 }
