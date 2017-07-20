@@ -47,10 +47,20 @@ export default class Posts extends Component {
       )
     });
 
-    return (
-      <div className="posts-container">
-        {post}
-      </div>
-    )
+    if (this.props.posts.length > 0){
+      return (
+        <div className="posts-wrapper">
+          {post}
+        </div>
+      )
+    } else {
+      return (
+        <div className="posts-wrapper">
+          <div className="single-post none">
+            <h1 className="title">I can't find that subreddit, please try another search.<br />I recommend 'pics' or 'marvel'</h1>
+          </div>
+        </div>
+      )
+    }
   }
 }

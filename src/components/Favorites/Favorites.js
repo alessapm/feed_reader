@@ -26,10 +26,20 @@ export default class Favorites extends Component {
       )
     });
 
-    return (
-      <div className="posts-wrapper">
-        {favorites}
-      </div>
-    )
+    if (favorites.length > 0){
+      return (
+        <div className="posts-wrapper">
+          {favorites}
+        </div>
+      )
+    } else {
+      return(
+        <div className="posts-wrapper">
+          <div className="single-post none">
+            <h1 className="title">No favorites yet!</h1>
+          </div>
+        </div>
+      )
+    }
   }
 }

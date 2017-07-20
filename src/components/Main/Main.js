@@ -5,6 +5,8 @@ import Posts from '../Posts/Posts';
 import Favorites from '../Favorites/Favorites';
 
 
+
+
 export default class Main extends Component {
   constructor(props) {
     super(props);
@@ -13,13 +15,18 @@ export default class Main extends Component {
       posts: [],
       favorites: [],
       onMain: true,
-      onFav: false
+      onFav: false,
+      subreddit: "analog"
     }
   }
 
   componentDidMount(){
+    this.searchReddit()
+  }
+
+  searchReddit(){
     console.log('inside componentDidMount')
-    Axios.get('https://www.reddit.com/r/analog/top/.json', {
+    Axios.get(`https://www.reddit.com/r/${this.state.subreddit}/top/.json`, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -29,7 +36,16 @@ export default class Main extends Component {
 
       this.setState({posts: data.data.data.children})
     })
-    .catch((err) => { console.log('error: ', err)})
+    .catch((err) => {
+      console.log('error: ', err);
+      alert('I can\'t find that subreddit. please try another search')
+    })
+  }
+
+  handleChange(event){
+    this.setState({
+      subreddit: event.target.value
+    })
   }
 
   pageOnMain(){
@@ -43,33 +59,51 @@ export default class Main extends Component {
   }
 
   addFav(fav){
-    console.log('****fav: ', fav);
     const currentFavorites = this.state.favorites;
-    console.log('current: ', currentFavorites)
     const newFavorites = currentFavorites.push(fav);
-
     this.setState({favorites: currentFavorites});
   }
 
   removeFav(fav){
     const currentFavorites = this.state.favorites;
-    console.log('currentFavorites: ', currentFavorites)
-    console.log('fav: ', fav)
-    const index = currentFavorites.indexOf(fav);
-    console.log('index: ', index)
-    const newFavorites = currentFavorites.splice(index, 1);
+    const newArr = [];
 
-    this.setState({favorites: currentFavorites});
-  }
+    currentFavorites.forEach((item) => {
+      console.log('item: ', item)
+      newArr.push(item.title)
+    })
+
+    const mySearch = fav.title
+    const index = newArr.indexOf(mySearch)
+    if (index >= 0){
+      currentFavorites.splice(index, 1)
+    }
+      this.setState({favorites: currentFavorites});
+    }
 
 
   render() {
     if (this.state.onMain){
       return(
         <div className = "container">
-          <h1>Main</h1>
-          <button onClick={this.pageOnMain.bind(this)}>Home</button>
-          <button onClick={this.pageOnFav.bind(this)}>Favorites</button>
+          <nav>
+            <button className="highlighted" onClick={this.pageOnMain.bind(this)}><i className="fa fa-reddit-alien" aria-hidden="true"></i> /r/analog</button>
+            <button className="lowlighted" onClick={this.pageOnFav.bind(this)}><i className="fa fa-heart" aria-hidden="true"></i> favorites ({this.state.favorites.length})</button>
+          </nav>
+          <div className="search-area">
+            <label>search a new subreddit: </label><br />
+            <input name="subreddit"
+              type="text"
+              onChange={this.handleChange.bind(this)}
+              placeholder="suggestions: 'pics' or 'marvel'"
+            /><br />
+            <button
+              type="submit"
+              className="find-subreddit"
+              onClick={this.searchReddit.bind(this)}>
+              Search
+            </button>
+        </div>
           <Posts
             posts={this.state.posts}
             favorites={this.state.favorites}
@@ -82,9 +116,11 @@ export default class Main extends Component {
     if (this.state.onFav){
       return(
         <div className = "container">
-          <h1>Favorites</h1>
-          <button onClick={this.pageOnMain.bind(this)}>Home</button>
-          <button onClick={this.pageOnFav.bind(this)}>Favorites</button>
+
+         <nav>
+            <button  className="lowlighted" onClick={this.pageOnMain.bind(this)}><i className="fa fa-reddit-alien" aria-hidden="true"></i> /r/analog</button>
+            <button className="highlighted" onClick={this.pageOnFav.bind(this)}><i className="fa fa-heart" aria-hidden="true"></i> favorites ({this.state.favorites.length})</button>
+          </nav>
           <Favorites
             favorites={this.state.favorites}
             removeFav={this.removeFav.bind(this)}
