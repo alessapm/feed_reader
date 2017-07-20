@@ -26,11 +26,7 @@ export default class Posts extends Component {
   }
 
   removeFavorite(fav){
-    // const currentFavorites = this.state.favorites;
-    // const index = currentFavorites.indexOf(fav);
-
-    // const newFavorites = currentFavorites.splice(index, 1);
-
+    this.props.removeFav(fav)
   }
 
 

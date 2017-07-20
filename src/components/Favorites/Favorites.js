@@ -8,7 +8,7 @@ export default class Favorites extends Component {
   }
 
   removeFavorite(fav){
-
+    this.props.removeFav(fav)
   }
 
   render(){
@@ -19,6 +19,7 @@ export default class Favorites extends Component {
           title={favorite.title}
           author={favorite.author}
           image={favorite.image}
+          thumbnail={favorite.thumbnail}
           ups={favorite.ups}
           removeFavorite={this.removeFavorite.bind(this)}
         />
@@ -26,7 +27,7 @@ export default class Favorites extends Component {
     });
 
     return (
-      <div className="favorites-container">
+      <div className="posts-wrapper">
         {favorites}
       </div>
     )

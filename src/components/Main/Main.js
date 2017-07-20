@@ -12,7 +12,6 @@ export default class Main extends Component {
     this.state = {
       posts: [],
       favorites: [],
-      error: '',
       onMain: true,
       onFav: false
     }
@@ -54,7 +53,10 @@ export default class Main extends Component {
 
   removeFav(fav){
     const currentFavorites = this.state.favorites;
+    console.log('currentFavorites: ', currentFavorites)
+    console.log('fav: ', fav)
     const index = currentFavorites.indexOf(fav);
+    console.log('index: ', index)
     const newFavorites = currentFavorites.splice(index, 1);
 
     this.setState({favorites: currentFavorites});
@@ -64,7 +66,7 @@ export default class Main extends Component {
   render() {
     if (this.state.onMain){
       return(
-        <div>
+        <div className = "container">
           <h1>Main</h1>
           <button onClick={this.pageOnMain.bind(this)}>Home</button>
           <button onClick={this.pageOnFav.bind(this)}>Favorites</button>
@@ -79,7 +81,7 @@ export default class Main extends Component {
     }
     if (this.state.onFav){
       return(
-        <div>
+        <div className = "container">
           <h1>Favorites</h1>
           <button onClick={this.pageOnMain.bind(this)}>Home</button>
           <button onClick={this.pageOnFav.bind(this)}>Favorites</button>
